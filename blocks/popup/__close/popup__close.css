@@ -1,5 +1,6 @@
 .popup__close {
   background-image: url(../../../images/Close_Icon.svg);
+  padding: 0;
   position: absolute;
   top: -40px;
   right: -40px;
