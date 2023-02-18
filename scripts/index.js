@@ -9,7 +9,7 @@ const popupTypeProfile = document.querySelector('.popup_type_profile');
 const addPostButton = document.querySelector('.profile__add-post');
 const popupAddPost = document.querySelector('.popup_type_post');
 const postPopupButtonOff = document.querySelector('.popup__close_type_post');
-const popupImgClose = document.querySelector('.popup_type_photo');
+const popupPictureScale = document.querySelector('.popup_type_photo');
 const popupImgBtnClose = document.querySelector('.popup__close_type_photo');
 
 
@@ -18,7 +18,7 @@ function popupAddToggle() {
 }
 
 function popupImgToggle() {
-  popupImgClose.classList.toggle('popup_opened');
+  popupPictureScale.classList.toggle('popup_opened');
 }
 popupImgBtnClose.addEventListener('click', popupImgToggle);
 addPostButton.addEventListener('click', popupAddToggle);
