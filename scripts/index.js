@@ -5,7 +5,7 @@ const nameInput = document.querySelector('.popup__field_type_name');
 const statusInput = document.querySelector('.popup__field_type_status');
 const nickName = document.querySelector('.profile__nickname');
 const statusAbout = document.querySelector('.profile__status');
-const popupTypeProfile = document.querySelector('.popup_type_profile');
+const popupTypeProfile = document.querySelector('.popup__body_type_profile');
 const addPostButton = document.querySelector('.profile__add-post');
 const popupAddPost = document.querySelector('.popup_type_post');
 const postPopupButtonOff = document.querySelector('.popup__close_type_post');
@@ -101,7 +101,7 @@ initialCards.forEach((obj) => {
   addPosts(obj.name, obj.link);
 })
 
-const popupTypePost = document.querySelector('.popup_type_post');
+const popupTypePost = document.querySelector('.popup__body_type_post');
 const titleInput = document.querySelector('.popup__field_type_title');
 const linkInput = document.querySelector('.popup__field_type_link');
 
