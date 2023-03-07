@@ -1,71 +1,60 @@
-const validationCfg = {
-  popupsBody: '.popup__body',
-  popupSubmitButtonOn: '.popup__submit',
-  popupSubmitButtonOff: '.popup__submit_inactive',
-  popupField: '.popup__field',
-  fieldErrorTextOff: '.popup__field-error',
-  fieldErrorTextOn: '.popup__field-error_active',
-  popupInvalidField: '.popup__field_invalid'
+function enableValidation(options) {
+  const popups = document.querySelectorAll(options.popupsBody);
+  popups.forEach((popup) => {
+    const popupButton = popup.querySelector(options.popupSubmitButtonOn);
+    const popupFields = popup.querySelectorAll(options.popupField);
+    validListennerFields(popupFields, popupButton, options);
+  });
 };
 
-const popups = document.querySelectorAll(validationCfg.popupsBody);
-popups.forEach((popup) =>{
-  const popupButton = popup.querySelector('.popup__submit');
-  const popupFields = popup.querySelectorAll('.popup__field');
-  validListennerFields(popupFields, popupButton);
-});
-
-function validationPopup(popup, validationCfg) {
-  const popupFields = popup.querySelectorAll('.popup__field');
-  const popupButton = popup.querySelector('.popup__submit');
-  validationButton(popupButton, Array.from(popupFields));
+function validationPopup(popup, options) {
+  const popupFields = popup.querySelectorAll(options.popupField);
+  const popupButton = popup.querySelector(options.popupSubmitButtonOn);
+  validationButton(popupButton, Array.from(popupFields), options);
 }
 
 //Фун-я валидности импутов
-function handleEditFields(field) {
+function handleEditFields(field, options) {
   const validField = field.validity.valid;
   const fieldSection = field.parentNode;
-  const fieldError = fieldSection.querySelector('.popup__field-error');
+  const fieldError = fieldSection.querySelector(options.fieldErrorTextOff);
   if(validField) {
-    field.classList.remove('popup__field_invalid');
-    fieldError.classList.remove('popup__field-error_active');
+    field.classList.remove(options.popupInvalidField);
+    fieldError.classList.remove(options.fieldErrorTextOn);
   } else {
-    field.classList.add('popup__field_invalid');
-    fieldError.classList.add('popup__field-error_active');
+    field.classList.add(options.popupInvalidField);
+    fieldError.classList.add(options.fieldErrorTextOn);
   }
 }
 
 //Фун-я  вкл кнопки
-function popupButtonActive(btn) {
+function popupButtonActive(btn, options) {
   btn.removeAttribute('disbled');
-  btn.classList.remove('popup__submit_inactive');
+  btn.classList.remove(options.popupSubmitButtonOff);
 }
 
 //Фун-я выкл кнопки
-function popupButtonInActive(btn) {
+function popupButtonInActive(btn, options) {
   btn.setAttribute('disbled', true);
-  btn.classList.add('popup__submit_inactive');
+  btn.classList.add(options.popupSubmitButtonOff);
 }
 
 //Фун-я проверки состояния и переключения кнопки
-function validationButton(btn, inputs) {
+function validationButton(btn, inputs, options) {
   const fieldsIsValid = inputs.every((input) => {return(input.validity.valid);});
   if(fieldsIsValid) {
-    popupButtonActive(btn);
+    popupButtonActive(btn, options);
   }else{
-    popupButtonInActive(btn);
+    popupButtonInActive(btn, options);
   };
 }
 
-/* сделать отдельную фун-ю для установления слушателей валидации полей popup c 5-8 cтроку
-а у validationPopup убрать установку слушателей, оставить только валидацию, в самое начало добавить поиск всех форм, всех полей и на все поля добавить слушателя*/
-
 //фун-я для установления слушателей валидации полей popup
-function validListennerFields(fields, popupButton) {
+function validListennerFields(fields, popupButton, options) {
   fields.forEach((field)=>{
     field.addEventListener('input', (evt) => {
-      handleEditFields(evt.target);
-      validationButton(popupButton, Array.from(fields));
+      handleEditFields(evt.target, options);
+      validationButton(popupButton, Array.from(fields), options);
     });
   });
 };

@@ -8,20 +8,20 @@ function closePopup(popup) {
   document.removeEventListener('keydown', handleKeydownEscape);
 }
 
-function openPopupProfile(popup) {
+function openPopupProfile(popup, options) {
   popupEditProfileName.value = profileName.textContent;
   popupEditProfileStatus.value = profileStatus.textContent;
-  validationPopup(popup);
+  validationPopup(popup, options);
   openPopup(popup);
 }
 
-function openPopupPost(popup) {
-  validationPopup(popup);
+function openPopupPost(popup, options) {
+  validationPopup(popup, options);
   openPopup(popup);
 }
 
-btnEditProfile.addEventListener('click', () => {openPopupProfile(popupEditProfile)});
-btnAddPost.addEventListener('click', () => {openPopupPost(popupAddPost)});
+btnEditProfile.addEventListener('click', () => {openPopupProfile(popupEditProfile, validationCfg)});
+btnAddPost.addEventListener('click', () => {openPopupPost(popupAddPost, validationCfg)});
 
 popupEditProfileClose.addEventListener('click', () => {closePopup(popupEditProfile)});
 popupAddPostClose.addEventListener('click', () => {closePopup(popupAddPost)});
@@ -92,7 +92,6 @@ initialCards.forEach((obj)=> {addPost(obj.name, obj.link)});
 
 popupAddPostForm.addEventListener('submit', handleFormSubmitAddPost);
 
-
 //Закрытие popup на ESC
 function handleKeydownEscape(anyKey){
   if(anyKey.key === 'Escape'){
@@ -101,15 +100,18 @@ function handleKeydownEscape(anyKey){
   }
 };
 
-
 //Закрытие по нажатию на Overlay
 function popupCloseOverlay(){
   const popup =  document.querySelector('.popup');
-  popup.addEventListener('click', (evt) => {console.log(evt);});
+  document.addEventListener('click', (evt) => {
+    if(evt.target.classList.contains('popup')) {
+      closePopup(evt.target);
+    };
+  });
 }
 
 popupCloseOverlay();
-
+enableValidation(validationCfg);
 
 
 
