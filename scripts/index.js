@@ -1,19 +1,27 @@
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', handleKeydownEscape);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', handleKeydownEscape);
 }
 
 function openPopupProfile(popup) {
   popupEditProfileName.value = profileName.textContent;
   popupEditProfileStatus.value = profileStatus.textContent;
+  validationPopup(popup);
+  openPopup(popup);
+}
+
+function openPopupPost(popup) {
+  validationPopup(popup);
   openPopup(popup);
 }
 
 btnEditProfile.addEventListener('click', () => {openPopupProfile(popupEditProfile)});
-btnAddPost.addEventListener('click', () => {openPopup(popupAddPost)});
+btnAddPost.addEventListener('click', () => {openPopupPost(popupAddPost)});
 
 popupEditProfileClose.addEventListener('click', () => {closePopup(popupEditProfile)});
 popupAddPostClose.addEventListener('click', () => {closePopup(popupAddPost)});
@@ -85,7 +93,22 @@ initialCards.forEach((obj)=> {addPost(obj.name, obj.link)});
 popupAddPostForm.addEventListener('submit', handleFormSubmitAddPost);
 
 
+//Закрытие popup на ESC
+function handleKeydownEscape(anyKey){
+  if(anyKey.key === 'Escape'){
+    const popupOpened = document.querySelector('.popup_opened');
+    closePopup(popupOpened);
+  }
+};
 
+
+//Закрытие по нажатию на Overlay
+function popupCloseOverlay(){
+  const popup =  document.querySelector('.popup');
+  popup.addEventListener('click', (evt) => {console.log(evt);});
+}
+
+popupCloseOverlay();
 
 
 
