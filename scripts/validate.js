@@ -59,5 +59,9 @@ function validListennerFields(fields, popupButton, options) {
   });
 };
 
-
+function isValidationPopup(popup, options) {
+  const popupFields = Array.from(popup.querySelectorAll(options.popupField));
+  const fieldsIsValid = popupFields.every((input) => {return(input.validity.valid);});
+  return fieldsIsValid;
+};
 

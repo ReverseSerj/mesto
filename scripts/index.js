@@ -28,13 +28,18 @@ popupAddPostClose.addEventListener('click', () => {closePopup(popupAddPost)});
 popupPictureScaleClose.addEventListener('click', () => {closePopup(popupPictureScale)});
 
 //Функция изменения и статуса
-function handleFormSubmitProfile(evt) {
+function handleFormSubmitProfile(evt, options) {
   evt.preventDefault();
-  profileName.textContent = popupEditProfileName.value;
-  profileStatus.textContent = popupEditProfileStatus.value;
-  closePopup(popupEditProfile)
+  if(isValidationPopup(evt.target, options)) {
+    profileName.textContent = popupEditProfileName.value;
+    profileStatus.textContent = popupEditProfileStatus.value;
+    closePopup(popupEditProfile)
+  };
 }
-popupEditProfileForm.addEventListener('submit', handleFormSubmitProfile);
+
+popupEditProfileForm.addEventListener('submit', (evt) => {
+  handleFormSubmitProfile(evt, validationCfg);
+});
 
 //Функция создания карточки
 function createPost(name, link) {
@@ -62,12 +67,15 @@ function addPost(name, link) {
 }
 
 //Обработка отправки формы
-function handleFormSubmitAddPost(evt) {
+function handleFormSubmitAddPost(evt, options) {
   evt.preventDefault();
-  addPost(popupAddPostTitle.value, popupAddPostLink.value);
+  if(isValidationPopup(evt.target, options)){
+    addPost(popupAddPostTitle.value, popupAddPostLink.value);
   closePopup(popupAddPost)
   popupAddPostForm.reset();
+  };
 }
+
 //Фунция Открытия картинки
 function openPopupPictureScale(name, link) {
   popupPictureScaleImg.src = link;
@@ -90,7 +98,9 @@ function deletePost(evt){
 
 initialCards.forEach((obj)=> {addPost(obj.name, obj.link)});
 
-popupAddPostForm.addEventListener('submit', handleFormSubmitAddPost);
+popupAddPostForm.addEventListener('submit', (evt) => {
+  handleFormSubmitAddPost(evt, validationCfg);
+});
 
 //Закрытие popup на ESC
 function handleKeydownEscape(anyKey){
