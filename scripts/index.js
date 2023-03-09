@@ -28,18 +28,14 @@ popupAddPostClose.addEventListener('click', () => {closePopup(popupAddPost)});
 popupPictureScaleClose.addEventListener('click', () => {closePopup(popupPictureScale)});
 
 //Функция изменения и статуса
-function handleFormSubmitProfile(evt, options) {
+function handleFormSubmitProfile(evt, ) {
   evt.preventDefault();
-  if(isValidationPopup(evt.target, options)) {
-    profileName.textContent = popupEditProfileName.value;
-    profileStatus.textContent = popupEditProfileStatus.value;
-    closePopup(popupEditProfile)
-  };
+  profileName.textContent = popupEditProfileName.value;
+  profileStatus.textContent = popupEditProfileStatus.value;
+  closePopup(popupEditProfile);
 }
 
-popupEditProfileForm.addEventListener('submit', (evt) => {
-  handleFormSubmitProfile(evt, validationCfg);
-});
+popupEditProfileForm.addEventListener('submit', handleFormSubmitProfile);
 
 //Функция создания карточки
 function createPost(name, link) {
@@ -67,13 +63,11 @@ function addPost(name, link) {
 }
 
 //Обработка отправки формы
-function handleFormSubmitAddPost(evt, options) {
+function handleFormSubmitAddPost(evt) {
   evt.preventDefault();
-  if(isValidationPopup(evt.target, options)){
-    addPost(popupAddPostTitle.value, popupAddPostLink.value);
+  addPost(popupAddPostTitle.value, popupAddPostLink.value);
   closePopup(popupAddPost)
   popupAddPostForm.reset();
-  };
 }
 
 //Фунция Открытия картинки
@@ -98,9 +92,7 @@ function deletePost(evt){
 
 initialCards.forEach((obj)=> {addPost(obj.name, obj.link)});
 
-popupAddPostForm.addEventListener('submit', (evt) => {
-  handleFormSubmitAddPost(evt, validationCfg);
-});
+popupAddPostForm.addEventListener('submit', handleFormSubmitAddPost);
 
 //Закрытие popup на ESC
 function handleKeydownEscape(anyKey){
@@ -112,11 +104,13 @@ function handleKeydownEscape(anyKey){
 
 //Закрытие по нажатию на Overlay
 function popupCloseOverlay(){
-  const popup =  document.querySelector('.popup');
-  document.addEventListener('click', (evt) => {
-    if(evt.target.classList.contains('popup')) {
-      closePopup(evt.target);
-    };
+  const popups = Array.from(document.querySelectorAll('.popup'));
+  popups.forEach((popup) =>{
+    popup.addEventListener('click', (evt) => {
+      if(evt.target.classList.contains('popup')) {
+        closePopup(evt.target);
+      };
+    });
   });
 }
 

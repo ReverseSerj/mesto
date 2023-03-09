@@ -8,17 +8,21 @@ function enableValidation(options) {
 };
 
 function validationPopup(popup, options) {
-  const popupFields = popup.querySelectorAll(options.popupField);
+  const popupFields = Array.from(popup.querySelectorAll(options.popupField));
   const popupButton = popup.querySelector(options.popupSubmitButtonOn);
-  validationButton(popupButton, Array.from(popupFields), options);
+  validationButton(popupButton, popupFields, options);
+  popupFields.forEach((field) => {
+    handleEditFields(field, options, true);
+  });
 }
 
 //Фун-я валидности импутов
-function handleEditFields(field, options) {
+function handleEditFields(field, options, emptyfield) {
   const validField = field.validity.valid;
   const fieldSection = field.parentNode;
   const fieldError = fieldSection.querySelector(options.fieldErrorTextOff);
-  if(validField) {
+  fieldError.textContent = field.validationMessage;
+  if(validField || (emptyfield && field.value === '')) {
     field.classList.remove(options.popupInvalidField);
     fieldError.classList.remove(options.fieldErrorTextOn);
   } else {
@@ -29,13 +33,13 @@ function handleEditFields(field, options) {
 
 //Фун-я  вкл кнопки
 function popupButtonActive(btn, options) {
-  btn.removeAttribute('disbled');
+  btn.removeAttribute('disabled');
   btn.classList.remove(options.popupSubmitButtonOff);
 }
 
 //Фун-я выкл кнопки
 function popupButtonInActive(btn, options) {
-  btn.setAttribute('disbled', true);
+  btn.setAttribute('disabled', true);
   btn.classList.add(options.popupSubmitButtonOff);
 }
 
@@ -53,15 +57,8 @@ function validationButton(btn, inputs, options) {
 function validListennerFields(fields, popupButton, options) {
   fields.forEach((field)=>{
     field.addEventListener('input', (evt) => {
-      handleEditFields(evt.target, options);
+      handleEditFields(evt.target, options, false);
       validationButton(popupButton, Array.from(fields), options);
     });
   });
 };
-
-function isValidationPopup(popup, options) {
-  const popupFields = Array.from(popup.querySelectorAll(options.popupField));
-  const fieldsIsValid = popupFields.every((input) => {return(input.validity.valid);});
-  return fieldsIsValid;
-};
-
