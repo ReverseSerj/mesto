@@ -45,6 +45,7 @@ const elementContainer = document.querySelector('.elements');
 //template
 const templateCard = document.querySelector('#post-card').content;
 const elementCard = templateCard.querySelector('.element');
+const templateClassName = '#post-card';
 
 //initialCardsArray
 const initialCards = [
@@ -74,3 +75,29 @@ const initialCards = [
   }
 ];
 
+export {
+  validationCfg,
+  popupAddPost,
+  popupPictureScale,
+  popupEditProfile,
+  popupEditProfileForm,
+  popupAddPostForm,
+  popupEditProfileClose,
+  popupAddPostClose,
+  popupPictureScaleClose,
+  popupEditProfileName,
+  popupEditProfileStatus,
+  popupAddPostTitle,
+  popupAddPostLink,
+  popupPictureScaleImg,
+  popupPictureScaleCpt,
+  btnAddPost,
+  btnEditProfile,
+  profileName,
+  profileStatus,
+  elementContainer,
+  templateCard,
+  elementCard,
+  templateClassName,
+  initialCards
+};

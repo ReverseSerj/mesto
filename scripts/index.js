@@ -1,3 +1,33 @@
+import {
+  validationCfg,
+  popupAddPost,
+  popupPictureScale,
+  popupEditProfile,
+  popupEditProfileForm,
+  popupAddPostForm,
+  popupEditProfileClose,
+  popupAddPostClose,
+  popupPictureScaleClose,
+  popupEditProfileName,
+  popupEditProfileStatus,
+  popupAddPostTitle,
+  popupAddPostLink,
+  popupPictureScaleImg,
+  popupPictureScaleCpt,
+  btnAddPost,
+  btnEditProfile,
+  profileName,
+  profileStatus,
+  elementContainer,
+  templateCard,
+  elementCard,
+  templateClassName,
+  initialCards
+} from './constants.js'
+
+import Card from './card.js';
+import formValidation from './validate.js';
+
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', handleKeydownEscape);
@@ -8,20 +38,20 @@ function closePopup(popup) {
   document.removeEventListener('keydown', handleKeydownEscape);
 }
 
-function openPopupProfile(popup, options) {
+function openPopupProfile(popup) {
   popupEditProfileName.value = profileName.textContent;
   popupEditProfileStatus.value = profileStatus.textContent;
-  validationPopup(popup, options);
+  profileFormValidator.validationForm();
   openPopup(popup);
 }
 
-function openPopupPost(popup, options) {
-  validationPopup(popup, options);
+function openPopupPost(popup) {
+  addPostFormValidator.validationForm();
   openPopup(popup);
 }
 
-btnEditProfile.addEventListener('click', () => {openPopupProfile(popupEditProfile, validationCfg)});
-btnAddPost.addEventListener('click', () => {openPopupPost(popupAddPost, validationCfg)});
+btnEditProfile.addEventListener('click', () => {openPopupProfile(popupEditProfile)});
+btnAddPost.addEventListener('click', () => {openPopupPost(popupAddPost)});
 
 popupEditProfileClose.addEventListener('click', () => {closePopup(popupEditProfile)});
 popupAddPostClose.addEventListener('click', () => {closePopup(popupAddPost)});
@@ -37,29 +67,10 @@ function handleFormSubmitProfile(evt, ) {
 
 popupEditProfileForm.addEventListener('submit', handleFormSubmitProfile);
 
-//Функция создания карточки
-function createPost(name, link) {
-  const newCard = elementCard.cloneNode(true);
-
-  const elementImg = newCard.querySelector('.element__img');
-  const elementDelPost = newCard.querySelector('.element__delete-post');
-  const elementLike = newCard.querySelector('.element__like');
-  const elementName = newCard.querySelector('.element__name');
-
-  elementName.textContent = name;
-  elementImg.src = link;
-  elementImg.alt = name;
-
-  elementImg.addEventListener('click', () => openPopupPictureScale(name, link))
-  elementLike.addEventListener('click', handleLike);
-  elementDelPost.addEventListener('click', deletePost);
-  return(newCard);
-}
-
 //Функция добавления карточки
 function addPost(name, link) {
-  const newCard = createPost(name, link);
-  elementContainer.prepend(newCard);
+  const card = new Card(name, link, templateClassName, openPopupPictureScale);
+  elementContainer.prepend(card.getCard());
 }
 
 //Обработка отправки формы
@@ -76,18 +87,6 @@ function openPopupPictureScale(name, link) {
   popupPictureScaleImg.alt = name;
   popupPictureScaleCpt.textContent = name;
   openPopup(popupPictureScale);
-}
-
-//Функция Лайк
-function handleLike(evt) {
-  const elementLike = evt.target;
-  elementLike.classList.toggle('element__like_active');
-}
-
-//Удаление карточки
-function deletePost(evt){
-  const delPost = evt.target.closest('.element');
-  delPost.remove();
 }
 
 initialCards.forEach((obj)=> {addPost(obj.name, obj.link)});
@@ -115,11 +114,12 @@ function popupCloseOverlay(){
 }
 
 popupCloseOverlay();
-enableValidation(validationCfg);
 
+const profileFormValidator = new formValidation(validationCfg, popupEditProfileForm);
+profileFormValidator.enableValidation();
 
-
-
+const addPostFormValidator = new formValidation(validationCfg, popupAddPostForm);
+addPostFormValidator.enableValidation();
 
 
 

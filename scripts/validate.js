@@ -1,64 +1,61 @@
-function enableValidation(options) {
-  const popups = document.querySelectorAll(options.popupsBody);
-  popups.forEach((popup) => {
-    const popupButton = popup.querySelector(options.popupSubmitButtonOn);
-    const popupFields = popup.querySelectorAll(options.popupField);
-    validListennerFields(popupFields, popupButton, options);
-  });
-};
+export default class formValidation {
+  constructor(options, form) {
+    this._options = options;
+    this._form = form;
+    this._inputs = Array.from(this._form.querySelectorAll(this._options.popupField));
+    this._button = this._form.querySelector(this._options.popupSubmitButtonOn);
+  };
 
-function validationPopup(popup, options) {
-  const popupFields = Array.from(popup.querySelectorAll(options.popupField));
-  const popupButton = popup.querySelector(options.popupSubmitButtonOn);
-  validationButton(popupButton, popupFields, options);
-  popupFields.forEach((field) => {
-    handleEditFields(field, options, true);
-  });
-}
+  enableValidation() {
+    this._validListennerFields();
+  };
 
-//Фун-я валидности импутов
-function handleEditFields(field, options, emptyfield) {
-  const validField = field.validity.valid;
-  const fieldSection = field.parentNode;
-  const fieldError = fieldSection.querySelector(options.fieldErrorTextOff);
-  fieldError.textContent = field.validationMessage;
-  if(validField || (emptyfield && field.value === '')) {
-    field.classList.remove(options.popupInvalidField);
-    fieldError.classList.remove(options.fieldErrorTextOn);
-  } else {
-    field.classList.add(options.popupInvalidField);
-    fieldError.classList.add(options.fieldErrorTextOn);
-  }
-}
+  _validListennerFields() {
+    this._inputs.forEach((field)=>{
+      field.addEventListener('input', (evt) => {
+        this._handleEditFields(evt.target, false);
+        this._validationButton();
+      });
+    });
+  };
 
-//Фун-я  вкл кнопки
-function popupButtonActive(btn, options) {
-  btn.removeAttribute('disabled');
-  btn.classList.remove(options.popupSubmitButtonOff);
-}
+  _handleEditFields(field, emptyfield) {
+    const validField = field.validity.valid;
+    const fieldSection = field.parentNode;
+    const fieldError = fieldSection.querySelector(this._options.fieldErrorTextOff);
+    fieldError.textContent = field.validationMessage;
+    if(validField || (emptyfield && field.value === '')) {
+      field.classList.remove(this._options.popupInvalidField);
+      fieldError.classList.remove(this._options.fieldErrorTextOn);
+    } else {
+      field.classList.add(this._options.popupInvalidField);
+      fieldError.classList.add(this._options.fieldErrorTextOn);
+    }
+  };
 
-//Фун-я выкл кнопки
-function popupButtonInActive(btn, options) {
-  btn.setAttribute('disabled', true);
-  btn.classList.add(options.popupSubmitButtonOff);
-}
+  _validationButton() {
+    const fieldsIsValid = this._inputs.every((input) => {return(input.validity.valid);});
+    if(fieldsIsValid){
+      this._popupButtonActive();
+    }else{
+      this._popupButtonInActive();
+    };
+  };
 
-//Фун-я проверки состояния и переключения кнопки
-function validationButton(btn, inputs, options) {
-  const fieldsIsValid = inputs.every((input) => {return(input.validity.valid);});
-  if(fieldsIsValid) {
-    popupButtonActive(btn, options);
-  }else{
-    popupButtonInActive(btn, options);
+  _popupButtonActive() {
+    this._button.removeAttribute('disabled');
+    this._button.classList.remove(this._options.popupSubmitButtonOff);
+  };
+
+  _popupButtonInActive() {
+    this._button.setAttribute('disabled', true);
+    this._button.classList.add(this._options.popupSubmitButtonOff);
+  };
+
+  validationForm() {
+    this._validationButton();
+    this._inputs.forEach((field) => {
+      this._handleEditFields(field, true);
+    });
   };
 }
-
-//фун-я для установления слушателей валидации полей popup
-function validListennerFields(fields, popupButton, options) {
-  fields.forEach((field)=>{
-    field.addEventListener('input', (evt) => {
-      handleEditFields(evt.target, options, false);
-      validationButton(popupButton, Array.from(fields), options);
-    });
-  });
-};
