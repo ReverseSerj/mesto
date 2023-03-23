@@ -19,14 +19,12 @@ import {
   profileName,
   profileStatus,
   elementContainer,
-  templateCard,
-  elementCard,
   templateClassName,
   initialCards
 } from './constants.js'
 
-import Card from './card.js';
-import formValidation from './validate.js';
+import Card from './Card.js';
+import FormValidation from './FormValidator.js';
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -115,10 +113,10 @@ function popupCloseOverlay(){
 
 popupCloseOverlay();
 
-const profileFormValidator = new formValidation(validationCfg, popupEditProfileForm);
+const profileFormValidator = new FormValidation(validationCfg, popupEditProfileForm);
 profileFormValidator.enableValidation();
 
-const addPostFormValidator = new formValidation(validationCfg, popupAddPostForm);
+const addPostFormValidator = new FormValidation(validationCfg, popupAddPostForm);
 addPostFormValidator.enableValidation();
 
 
