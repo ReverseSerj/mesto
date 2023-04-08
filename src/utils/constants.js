@@ -9,6 +9,9 @@ const validationCfg = {
   popupInvalidField: 'popup__field_invalid'
 };
 
+const nameInput = document.querySelector('.popup__field_type_name');
+const aboutInput = document.querySelector('.popup__field_type_status');
+
 //pageBtns
 const btnAddPost = document.querySelector('.profile__add-post');
 const btnEditProfile = document.querySelector('.profile__edit');
@@ -53,5 +56,7 @@ export {
   templateCard,
   elementCard,
   templateClassName,
-  initialCards
+  initialCards,
+  nameInput,
+  aboutInput
 };

@@ -4,15 +4,17 @@ import {
   btnAddPost,
   btnEditProfile,
   templateClassName,
-  initialCards
-} from './constants.js'
+  initialCards,
+  aboutInput,
+  nameInput
+} from '../utils/constants.js'
 
-import Card from './Card.js';
-import FormValidation from './FormValidator.js';
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
-import Section from './Section.js';
-import UserInfo from './UserInfo.js';
+import Card from '../components/Card.js';
+import FormValidation from '../components/FormValidator.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import Section from '../components/Section.js';
+import UserInfo from '../components/UserInfo.js';
 
 //Функция изменения и статуса
 function handleFormSubmitProfile(evt, popupObject, inputValues) {
@@ -40,9 +42,6 @@ modalAddPost.setEventListeners();
 const modalImage = new PopupWithImage('.popup_type_photo');
 modalImage.setEventListeners();
 
-btnEditProfile.addEventListener('click', () => {modalEditProfile.open()});
-btnAddPost.addEventListener('click', () => {modalAddPost.open()});
-
 const elements = new Section({items: initialCards, renderer: createCard}, '.elements');
 elements.renderItems();
 
@@ -57,7 +56,17 @@ profileFormValidator.enableValidation();
 const addPostFormValidator = new FormValidation(validationCfg, modalAddPost.getFormElement());
 addPostFormValidator.enableValidation();
 
-
+btnEditProfile.addEventListener('click', () => {
+  const objectUserData = user.getUserInfo();
+  nameInput.value = objectUserData.name;
+  aboutInput.value = objectUserData.about;
+  profileFormValidator.validationForm();
+  modalEditProfile.open();
+});
+btnAddPost.addEventListener('click', () => {
+  addPostFormValidator.validationForm();
+  modalAddPost.open();
+});
 
 
 

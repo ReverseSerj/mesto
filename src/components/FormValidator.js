@@ -21,7 +21,7 @@ export default class FormValidation {
 
   _handleEditFields(field, emptyfield) {
     const validField = field.validity.valid;
-    const fieldSection = field.parentNode;
+    const fieldSection = field.closest('.popup__field-container');
     const fieldError = fieldSection.querySelector(this._options.fieldErrorTextOff);
     fieldError.textContent = field.validationMessage;
     if(validField || (emptyfield && field.value === '')) {
