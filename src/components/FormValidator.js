@@ -14,14 +14,14 @@ export default class FormValidation {
     this._inputs.forEach((field)=>{
       field.addEventListener('input', (evt) => {
         this._handleEditFields(evt.target, false);
-        this._validationButton();
+        this._toggleButtonState();
       });
     });
   };
 
   _handleEditFields(field, emptyfield) {
     const validField = field.validity.valid;
-    const fieldSection = field.closest('.popup__field-container');
+    const fieldSection = field.closest(this._options.fieldContainer);
     const fieldError = fieldSection.querySelector(this._options.fieldErrorTextOff);
     fieldError.textContent = field.validationMessage;
     if(validField || (emptyfield && field.value === '')) {
@@ -33,27 +33,27 @@ export default class FormValidation {
     }
   };
 
-  _validationButton() {
+  _toggleButtonState() {
     const fieldsIsValid = this._inputs.every((input) => {return(input.validity.valid);});
     if(fieldsIsValid){
-      this._popupButtonActive();
+      this._activateButton();
     }else{
-      this._popupButtonInActive();
+      this._disableButton();
     };
   };
 
-  _popupButtonActive() {
+  _activateButton() {
     this._button.removeAttribute('disabled');
     this._button.classList.remove(this._options.popupSubmitButtonOff);
   };
 
-  _popupButtonInActive() {
+  _disableButton() {
     this._button.setAttribute('disabled', true);
     this._button.classList.add(this._options.popupSubmitButtonOff);
   };
 
-  validationForm() {
-    this._validationButton();
+  validateForm() {
+    this._toggleButtonState();
     this._inputs.forEach((field) => {
       this._handleEditFields(field, true);
     });

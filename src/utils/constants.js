@@ -6,7 +6,8 @@ const validationCfg = {
   popupField: '.popup__field',
   fieldErrorTextOff: '.popup__field-error',
   fieldErrorTextOn: 'popup__field-error_active',
-  popupInvalidField: 'popup__field_invalid'
+  popupInvalidField: 'popup__field_invalid',
+  fieldContainer: '.popup__field-container'
 };
 
 const nameInput = document.querySelector('.popup__field_type_name');

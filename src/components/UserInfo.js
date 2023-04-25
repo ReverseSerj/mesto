@@ -3,25 +3,16 @@ export default class UserInfo {
     this._profileNameElement = document.querySelector(profileNameSelector);
     this._profileAboutElement = document.querySelector(profileAboutSelector);
     this._profileAvatarElement = document.querySelector(profileAvatarSelector);
-    this._userName = '';
-    this._aboutInfo = '';
     this._patchEditPorfile = patchEditPorfile;
     this._serverUpdateAvatar = updateAvatar;
   }
 
   getUserInfo() {
     const obj = {
-      name: this._userName,
-      about: this._aboutInfo
+      name: this._name,
+      about: this._about
     }
     return(obj);
-  }
-
-  setUserInfo(obj) {
-    this._userName = obj.name;
-    this._aboutInfo = obj.about;
-    this._profileNameElement.textContent = this._userName;
-    this._profileAboutElement.textContent = this._aboutInfo;
   }
 
   _updateAvatar() {
@@ -56,7 +47,7 @@ export default class UserInfo {
     })
   }
 
-  patchEditPorfile(obj) {
+  setUserInfo(obj) {
     return this._patchEditPorfile(obj)
     .then(obj => {
       this._name = obj.name;

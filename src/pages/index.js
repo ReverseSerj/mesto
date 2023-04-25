@@ -23,11 +23,11 @@ const api = new Api({
   token: 'eb252b50-6915-4e03-a8a3-e61dab946d4a'
 });
 
-//Функция изменения и статуса
+//Функция изменения имени и статуса
 function handleFormSubmitProfile(evt, popupObject, inputValues) {
   evt.preventDefault();
   popupObject.setButtonText(`Сохранение...`);
-  user.patchEditPorfile(inputValues)
+  user.setUserInfo(inputValues)
   .then(res => {
     popupObject.close();
   })
@@ -89,7 +89,6 @@ function handleFormSubmitDelPost(evt, popupObject, inputValues) {
 }
 
 const user = new UserInfo({profileNameSelector:'.profile__nickname', profileAboutSelector:'.profile__status', profileAvatarSelector: '.profile__avatar'}, api.patchEditPorfile.bind(api), api.updateAvatar.bind(api));
-user.setUserInfo({name: 'Жак-Ив Кусто', about:'Исследователь океана'});
 
 const modalEditProfile = new PopupWithForm('.popup_type_profile', handleFormSubmitProfile);
 modalEditProfile.setEventListeners();
@@ -123,7 +122,7 @@ const avatarFormValidator = new FormValidation(validationCfg, modalEditAvatar.ge
 avatarFormValidator.enableValidation();
 
 btnEditAvatar.addEventListener('click', () => {
-  avatarFormValidator.validationForm();
+  avatarFormValidator.validateForm();
   modalEditAvatar.open();
 })
 
@@ -131,11 +130,12 @@ btnEditProfile.addEventListener('click', () => {
   const objectUserData = user.getUserInfo();
   nameInput.value = objectUserData.name;
   aboutInput.value = objectUserData.about;
-  profileFormValidator.validationForm();
+  profileFormValidator.validateForm();
   modalEditProfile.open();
 });
+
 btnAddPost.addEventListener('click', () => {
-  addPostFormValidator.validationForm();
+  addPostFormValidator.validateForm();
   modalAddPost.open();
 });
 
