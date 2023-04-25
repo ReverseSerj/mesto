@@ -109,7 +109,7 @@ modalDelPost.setEventListeners();
 const elements = new Section({items: [], renderer: createCard}, '.elements');
 
 function createCard(obj) {
-  const card = new Card(obj, templateClassName, (name, link) => {modalImage.open(name, link)}, user.getId(),modalDelPost.open.bind(modalDelPost));
+  const card = new Card(obj, templateClassName, (name, link) => {modalImage.open(name, link)}, user.getId(),modalDelPost.open.bind(modalDelPost), api.putLike.bind(api), api.takeOffLike.bind(api));
   return(card.getCard());
 }
 

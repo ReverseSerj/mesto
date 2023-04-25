@@ -18,20 +18,8 @@
   color: #C4C4C4;
 }
 
-.popup__field[id ='top'] {
- padding-top: 46px;
-}
-
 @media screen and (max-width: 614px) {
-  .popup__field[id ='top'] {
+  .popup__field {
     padding-top: 76px;
   }
-}
-
-.popup__field[id ='bottom'] {
- padding-top: 16px;
-}
-
-.popup__field[id = 'top-avatar'] {
-  padding-top: 46px;
 }

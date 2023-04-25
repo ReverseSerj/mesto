@@ -48,3 +48,5 @@
 @import url(../blocks/popup/__field-error/_active/popup__field-error_active.css);
 @import url(../blocks/popup/__field/_invalid/popup__field_invalid.css);
 @import url(../blocks/popup/__field-container/popup__field-container.css);
+@import url(../blocks/popup/__field/_pos/popup__field_pos_top.css);
+@import url(../blocks/popup/__field/_pos/popup__field_pos_bottom.css);
