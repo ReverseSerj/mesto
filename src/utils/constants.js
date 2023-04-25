@@ -15,6 +15,7 @@ const aboutInput = document.querySelector('.popup__field_type_status');
 //pageBtns
 const btnAddPost = document.querySelector('.profile__add-post');
 const btnEditProfile = document.querySelector('.profile__edit');
+const btnEditAvatar = document.querySelector('.profile__avatar-edit-button');
 
 //template
 const templateCard = document.querySelector('#post-card').content;
@@ -58,5 +59,6 @@ export {
   templateClassName,
   initialCards,
   nameInput,
-  aboutInput
+  aboutInput,
+  btnEditAvatar
 };
