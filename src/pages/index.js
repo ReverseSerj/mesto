@@ -100,10 +100,10 @@ modalAddPost.setEventListeners();
 const modalImage = new PopupWithImage('.popup_type_photo');
 modalImage.setEventListeners();
 
-const modalEditAvatar = new PopupWithForm('.popup_type_edit_avatar', handleFormSubmitAvatar);
+const modalEditAvatar = new PopupWithForm('.popup_type_avatar', handleFormSubmitAvatar);
 modalEditAvatar.setEventListeners();
 
-const modalDelPost = new PopupWithForm('.popup_type_submit_delete', handleFormSubmitDelPost);
+const modalDelPost = new PopupWithForm('.popup_type_delete', handleFormSubmitDelPost);
 modalDelPost.setEventListeners();
 
 const elements = new Section({items: [], renderer: createCard}, '.elements');
