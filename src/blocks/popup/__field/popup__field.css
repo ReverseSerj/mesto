@@ -18,16 +18,16 @@
   color: #C4C4C4;
 }
 
-.popup__field[id='top-input'] {
+.popup__field[name ='top'] {
  padding-top: 46px;
 }
 
 @media screen and (max-width: 614px) {
-  .popup__field[id='top-input'] {
+  .popup__field[name ='top'] {
     padding-top: 76px;
   }
 }
 
-.popup__field[id='bottom-input'] {
+.popup__field[name ='bottom'] {
  padding-top: 16px;
 }
