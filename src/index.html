@@ -67,11 +67,11 @@
       <h2 class="popup__title">Новое место</h2>
       <form class="popup__body popup__body_type_post" name="add-Post" novalidate>
         <div class="popup__field-container">
-          <input type="text" name="name" class="popup__field popup__field_type_title" id="top" placeholder="Название" required minlength="2" maxlength="30">
+          <input type="text" name="name" class="popup__field popup__field_type_title" id="top-input" placeholder="Название" required minlength="2" maxlength="30">
           <span class="popup__field-error">Вы пропустили это поле.</span>
         </div>
         <div class="popup__field-container">
-          <input type="url" name="link" class="popup__field popup__field_type_link" id="bottom" placeholder="Ссылка на картинку" required>
+          <input type="url" name="link" class="popup__field popup__field_type_link" id="bottom-input" placeholder="Ссылка на картинку" required>
           <span class="popup__field-error">Введите адрес сайта.</span>
         </div>
         <button type="submit" class="popup__submit" name="button-edit">Сохранить</button>
@@ -100,7 +100,7 @@
       <h2 class="popup__title">Обновить аватар</h2>
       <form class="popup__body popup__body_type_edit_avatar" name="edit-avatar" novalidate>
         <div class="popup__field-container">
-          <input type="url" name="avatar" class="popup__field popup__field_type_title" id="top" placeholder="Ссылка" required>
+          <input type="url" name="avatar" class="popup__field popup__field_type_title" id="top-input" placeholder="Ссылка" required>
           <span class="popup__field-error">Вы пропустили это поле.</span>
         </div>
         <button type="submit" class="popup__submit" name="button-edit-avatar">Сохранить</button>
